@@ -1,7 +1,9 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 require "db.php";
-require "sesion.php";
 
 unset($_SESSION['logged_user']);
 header('Location: /');

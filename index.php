@@ -1,7 +1,9 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-require "sesion.php";
 require_once "db.php";
 require "test.php"
 
