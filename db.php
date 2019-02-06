@@ -1,7 +1,5 @@
 <?php
 
-
-
 class db{
 
     private static $connect;
