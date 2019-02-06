@@ -1,5 +1,9 @@
 <?php
 require "db.php";
+require "test.php";
+require "sesion.php";
+print_r($_SESSION);
+
 
 $data = $_POST;
 if (isset($data['do_login'])) {
@@ -12,10 +16,9 @@ if (isset($data['do_login'])) {
         $errors[] = 'Enter password';
     }
     if (empty($errors)) {
-        $sql = "SELECT login, password FROM users WHERE login=? AND password=?";
-        $query = db::connect()->prepare($sql);
-        $query->execute([$data['login'], md5($data['password'])]);
-        if ($query->rowCount() == 1) {
+        $test = new test();
+        $query = $test->login($data);
+        if ($query == 1) {
             $user = $data['login'];
             $_SESSION['logged_user'] = $user;
             echo "Hi $user";
@@ -23,6 +26,7 @@ if (isset($data['do_login'])) {
         } else {
             echo 'User not found';
         }
+
     } else {
         echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
     }

@@ -2,6 +2,7 @@
 
 require "db.php";
 require "test.php";
+require "sesion.php";
 
 $data = $_POST;
 if (isset($data['do_signup'])) {
@@ -13,13 +14,13 @@ if (isset($data['do_signup'])) {
 
     if ($data['password'] == '') {
         $errors[] = 'Enter password';
-    }else{
+    } else {
         $test = new test();
 
         $check = $test->chekLogin($data);
 
-        print_r($check);
-       die;
+//        print_r($check);
+//       die;
 
         if ($check > 0) {
 
@@ -29,8 +30,8 @@ if (isset($data['do_signup'])) {
 
 
     if (empty($errors)) {
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-        $result = $db->prepare(
+        db::connect()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $result = db::connect()->prepare(
             "INSERT INTO users(`login`, `password`)
                 VALUES(?,?)");
         $result->execute([$data['login'], md5($data['password'])]);
@@ -48,18 +49,18 @@ if (isset($data['do_signup'])) {
 <form action="/signup.php" method="POST">
 
     <p>
-        <p>Введите логин</p>
-        <input type="text" name="login" value="<?php
-        if(isset ($data['login'])){
-            $data['login'];
-        }
-        echo $data['login'] ?? '';
-         ?>">
+    <p>Введите логин</p>
+    <input type="text" name="login" value="<?php
+    if (isset ($data['login'])) {
+        $data['login'];
+    }
+    echo $data['login'] ?? '';
+    ?>">
     </p>
 
     <p>
-        <p>Введите пароль</p>
-        <input type="password" name="password">
+    <p>Введите пароль</p>
+    <input type="password" name="password">
     </p>
 
     <p>

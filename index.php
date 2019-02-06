@@ -1,7 +1,7 @@
 <?php
-session_start();
 
 
+require "sesion.php";
 require "db.php";
 
 ?>

@@ -1,6 +1,7 @@
 <?php
 
 
+
 class db{
 
     private static $connect;
@@ -9,6 +10,7 @@ class db{
      if (empty(self::$connect)){
          try{
              self::$connect = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+
          }
          catch (PDOException $e)
          {
@@ -19,6 +21,7 @@ class db{
      return self::$connect;
 
     }
+
 }
 
 
