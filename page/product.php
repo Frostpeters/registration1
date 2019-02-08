@@ -1,5 +1,5 @@
 <?php
-require_once "../login/db.php";
+require_once __DIR__ . '/../db.php';
 
 class product
 {
@@ -42,7 +42,7 @@ class product
                 " LIMIT " . self::SH_DEFAULT);
 
             $query = db::connect()->query($sql);
-            print_r($sql);
+//            print_r($sql);
 
             $i = 0;
             while ($row = $query->fetch()) {

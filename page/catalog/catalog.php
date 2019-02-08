@@ -3,17 +3,17 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once "category.php";
-require_once __DIR__ . '/../db.php';
-require_once "product.php";
+
+require_once "CatalogController.php";
+
 
 $categories = array();
-//$categories = new category();
-//$categories->getCategory();
+
 $categories = category::getCategory();
-$product = array();
-$product = product::getProduct();
-//$product = product::getProduct();
+
+$categoryProduct = array();
+$categoryProduct = product::getProductListByCategory($_GET['cat']);
+
 if (isset($_POST['to_basket'])) {
     if (isset($_SESSION['cart'][$_POST['name']])) {
         $_SESSION['cart'][$_POST['name']] += 1;
@@ -25,6 +25,7 @@ if (!empty($_SESSION['cart'])) {
     $suma = array_sum($_SESSION['cart']);
 }
 
+
 ?>
 Shop
 <div align="right">
@@ -33,29 +34,27 @@ Shop
 </div>
 <?php foreach ($categories as $categorItem): ?>
     <div>
-        <p><a href="/page/catalog/catalog.php?cat=<?php echo $categorItem['id']; ?>">
+        <p><a href="/category/<?php echo $categorItem ['id']; ?>">
                 <?php echo $categorItem ['name']; ?>
             </a></p>
     </div>
-<?php endforeach;
-print_r($id); ?>
+<?php endforeach; ?>
 Product
-<?php foreach ($product as $productItem): ?>
+<?php foreach ($categoryProduct as $productItem): ?>
     <div>
-        <p><a href="/product/prod.php?cat=<?php echo $productItem ['id']; ?>">
+        <p><a href="/product/<?php echo $productItem ['id']; ?>">
                 <?php echo $productItem ['name']; ?>
                 <?php echo $productItem ['price']; ?>
             </a></p>
         <form action="" method="POST">
             <input type="hidden" value="<?php echo $productItem ['id']; ?>" name="id">
-            <input type="hidden" value="<?php echo $productItem ['name']; ?>" name="name">
             <input type="submit" name="to_basket">
         </form>
 
     </div>
 <?php endforeach; ?>
 <div>
-    <button><a href="../logout.php">EXIT</a></button>
+    <button><a href="../mainpage.php">Back</a></button>
 </div>
 
 

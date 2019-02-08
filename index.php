@@ -4,14 +4,14 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once "./login/db.php";
-require "./login/userLogSign.php"
+require_once __DIR__ . './db.php';
+require_once "./userLogSign.php"
 
 ?>
 <?php if (isset($_SESSION['logged_user'])) : ?>
     HI
     <?php echo $_SESSION['logged_user'] ?><br>
-    <a href="login/logout.php">Logout</a>
+    <a href="logout.php">Logout</a>
 <?php else : ?>
     <form action="/index.php" method="POST">
 
