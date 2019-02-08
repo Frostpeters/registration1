@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require_once "db.php";
-require "test.php"
+require "userLogSign.php"
 
 ?>
 <?php if (isset($_SESSION['logged_user'])) : ?>
@@ -13,7 +13,7 @@ require "test.php"
     <?php echo $_SESSION['logged_user'] ?><br>
     <a href="logout.php">Logout</a>
 <?php else : ?>
-    <form action="/index.php" method="POST">
+    <form action="/login/index.php" method="POST">
 
         <p>
         <p>Введите логин</p>
@@ -43,14 +43,14 @@ require "test.php"
     <?php
     $data = $_POST;
     if (isset($data['do_login'])) {
-        $login = new test();
+        $login = new userLogSign();
 
         $login->flogin($data);
 
     }
 
     if (isset($data['do_signup'])) {
-        $sigin = new test();
+        $sigin = new userLogSign();
 
         $sigin->fsignup($data);
 

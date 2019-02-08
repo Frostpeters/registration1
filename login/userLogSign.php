@@ -3,7 +3,7 @@
 require_once "db.php";
 
 
-class test
+class userLogSign
 {
     public $check;
 
@@ -38,13 +38,13 @@ class test
             $errors[] = 'Enter password';
         }
         if (empty($errors)) {
-            $test = new test();
+            $test = new userLogSign();
             $query = $test->login($data);
             if ($query == 1) {
                 $user = $data['login'];
                 $_SESSION['logged_user'] = $user;
                 echo "Hi $user";
-                echo '<div style="color: green;">Go to main <a href="/">page</a></div><hr>';
+                echo '<div style="color: green;">Go to main <a href="/page/mainpage.php">page</a></div><hr>';
             } else {
                 echo 'User not found';
             }
@@ -66,7 +66,7 @@ class test
         if ($data['password'] == '') {
             $errors[] = 'Enter password';
         } else {
-            $test = new test();
+            $test = new userLogSign();
 
             $check = $test->chekLogin($data);
 
