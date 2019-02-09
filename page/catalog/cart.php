@@ -3,33 +3,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once "cartController.php";
+
 $cart = array();
 
 $cart = $_SESSION['cart'];
 //print_r($cart);
-
-if (isset($_POST['delete'])) {
-    unset($_SESSION['cart'][$_POST['name']]);
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-if (isset($_POST['del'])) {
-    if ($_SESSION['cart'][$_POST['name']] > 1) {
-        $_SESSION['cart'][$_POST['name']] -= 1;
-    } else {
-        unset($_SESSION['cart'][$_POST['name']]);
-    }
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-
-if (isset($_POST['add'])){
-    if (isset($_SESSION['cart'][$_POST['name']])) {
-        $_SESSION['cart'][$_POST['name']] += 1;
-    } else {
-        $_SESSION['cart'][$_POST['name']] = 1;
-    }
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-
 
 ?>
 <?php foreach ($cart as $key => $value): ?>
@@ -37,17 +16,29 @@ if (isset($_POST['add'])){
         <p><a href="/product/prod.php?cat=<?php echo $value; ?>"><?php echo $key ?>
             </a></p>
         <td>Количество <?php echo $value ?></td>
-        <form action="" method="POST">
+        <form action="" method="POST">Delete
             <input type="hidden" value="<?php echo $key; ?>" name="name">
             <input type="submit" name="delete">
+            <?php
+            $cartDelete = new cartController();
+            $cartDelete->cartDelete();
+            ?>
         </form>
-        <form action="" method="POST">
+        <form action="" method="POST">delete 1
             <input type="hidden" value="<?php echo $key; ?>" name="name">
             <input type="submit" name="del">
+            <?php
+            $cartDeleteOne = new cartController();
+            $cartDeleteOne->cartDeleteOne();
+            ?>
         </form>
-        <form action="" method="POST">
+        <form action="" method="POST">Add 1
             <input type="hidden" value="<?php echo $key; ?>" name="name">
             <input type="submit" name="add">
+            <?php
+            $cartAdd = new cartController();
+            $cartAdd->cartAdd();
+            ?>
         </form>
 
     </div>
